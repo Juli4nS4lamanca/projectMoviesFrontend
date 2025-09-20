@@ -1,0 +1,29 @@
+#mediaForm{
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#mediaForm button[type=submit] {
+  margin: 0 auto;
+  display: block;
+}
+
+h1{
+  text-align: center;
+}
+
+.media-synopsis{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.card-img-media{
+  height: 250px;
+  object-fit: cover;
+}
+
+.message {
+  text-align: center;
+}
