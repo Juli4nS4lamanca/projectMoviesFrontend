@@ -1,16 +1,8 @@
-import axios from "axios";
+import serviceEntity from "@/services/entity.js";
+
 const baseUrl = '/api/medias';
+const mediasServices = serviceEntity(baseUrl);
 
-const getAll = async () => {
-  const response = await axios.get(baseUrl);
-  return response.data;
-};
+export default mediasServices;
 
-const create = async newMedia => {
-  const response = await axios.post(baseUrl, newMedia);
-  return response.data;
-};
 
-export default {
-  getAll, create
-};
