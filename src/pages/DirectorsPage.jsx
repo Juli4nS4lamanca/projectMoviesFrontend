@@ -22,7 +22,7 @@ const DirectorsPage = () => {
       <h1>Directores</h1>
       <button type="button" className='btn btn-primary'
         data-bs-toggle='modal' data-bs-target='#formDirector'
-        onClick={() => handleSelect(utilsModels.clearDirector)}><i className="bi bi-plus-square-fill"></i> Nuevo Director</button>
+        onClick={() => handleSelect()}><i className="bi bi-plus-square-fill"></i> Nuevo Director</button>
       <table className='table table-striped-columns'>
         <THead list={headTable} />
         <tbody>

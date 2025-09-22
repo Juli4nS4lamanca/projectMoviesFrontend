@@ -1,41 +1,67 @@
-import { useEffect, useState } from 'react';
-import MediaCard from '@components/medias/MediaCard.jsx';
-import mediasService from '@services/medias.js';
+import THead from '@components/common/tables/THead.jsx';
+import ModalFormMedia from '@components/modals/ModalFormMedia.jsx';
+import ModalDelete from '@components/modals/ModalDelete.jsx';
+import FormMedia from '@components/forms/FormMedia.jsx';
+import mediasServices from '@services/medias.js';
+import utils from '@/utils/utils.js';
+import useCrud from '@/hooks/useCrudMedia.jsx';
 
 const MediasPage = () => {
-  const [medias, setMedias] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchMedias = async () => {
-      const initialMedias = await mediasService.getAll();
-      setMedias(initialMedias);
-    };
-    fetchMedias();
-    setIsLoading(false);
-  }, []);
-
+  const {
+    entities: medias,
+    selectedEntity: selectedMedia,
+    handleSelect,
+    handleCreate,
+    handleUpdate,
+    handleDelete } = useCrud(mediasServices);
+  const headTable = ['Nombre', 'Tipo', 'Genero', 'Director', 'Casa Productora', 'Fecha Actualizacion', 'Acciones'];
 
   return (
     <>
       <h1>Peliculas</h1>
-      {isLoading ? (
-        <div class="d-flex justify-content-center">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      ) :
-        (
-          <div className='row row-cols-1 row-cols-md-5 g-4'>
-            {medias.map(media => (
-              <MediaCard key={media.id} title={media.title} synopsis={media.synopsis} img={media.img} />
-            ))}
-          </div>
-        )}
+      <button type="button" className='btn btn-primary'
+        data-bs-toggle='modal' data-bs-target='#formMedia'
+        onClick={() => handleSelect()}><i className="bi bi-plus-square-fill"></i> Nueva Pelicula</button>
+      <table className='table table-striped-columns'>
+        <THead list={headTable} />
+        <tbody>
+          {medias.map(media => (
+            <tr key={media.id}>
+              <td>{media.title}</td>
+              <td>{media.type.name}</td>
+              <td>{media.genre.name}</td>
+              <td>{media.director.name}</td>
+              <td>{media.producer.name}</td>
+              <td>{utils.fecha(media.dateUpdate)}</td>
+              <td>
+                <button type="button" className='btn btn-primary'
+                  data-bs-toggle='modal' data-bs-target='#formMedia'
+                  onClick={() => handleSelect(media)}><i className="bi bi-pencil-square"></i></button>
+                <button type="button" className='btn btn-danger'
+                  data-bs-toggle='modal' data-bs-target='#deleteMedia'
+                  onClick={() => handleSelect(media)}><i className="bi bi-trash"></i></button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <ModalFormMedia id={'formMedia'}
+        model={'media'}
+        entity={selectedMedia}
+        services={mediasServices}
+        onUpdate={handleUpdate}
+        onCreate={handleCreate}
+        formComponent={FormMedia}
+      />
+      <ModalDelete id={'deleteMedia'}
+        model='media'
+        entity={selectedMedia}
+        services={mediasServices}
+        onDelete={handleDelete}
+      />
     </>
   )
+
 };
 
 export default MediasPage;

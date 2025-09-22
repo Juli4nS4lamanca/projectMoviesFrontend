@@ -22,7 +22,7 @@ const ProducersPage = () => {
       <h1>Productores</h1>
       <button type="button" className='btn btn-primary'
         data-bs-toggle='modal' data-bs-target='#formProducer'
-        onClick={() => handleSelect(utilsModels.producer)}><i className="bi bi-plus-square-fill"></i> Nueva Productora</button>
+        onClick={() => handleSelect()}><i className="bi bi-plus-square-fill"></i> Nueva Productora</button>
       <table className='table table-striped-columns'>
         <THead list={headTable} />
         <tbody>

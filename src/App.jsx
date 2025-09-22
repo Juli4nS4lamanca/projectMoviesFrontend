@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from '@components/Navbar.jsx';
+import IndexPage from '@pages/IndexPage.jsx';
 import MediasPage from '@pages/MediasPage.jsx';
 import MediaForm from '@pages/MediaForm.jsx';
 import DirectorsPage from '@pages/DirectorsPage.jsx';
@@ -23,7 +24,7 @@ const App = () => {
           <Route path='/producers' element={<ProducersPage />} />
           <Route path='/genres' element={<GenresPage />} />
           <Route path='/types' element={<TypesPage />} />
-          <Route path='*' element={<MediasPage />} />
+          <Route path='/' element={<IndexPage />} />
         </Routes>
       </MessageProvider>
     </BrowserRouter>

@@ -22,7 +22,7 @@ const TypesPage = () => {
       <h1>Tipos</h1>
       <button type="button" className='btn btn-primary'
         data-bs-toggle='modal' data-bs-target='#formType'
-        onClick={() => handleSelect(utilsModels.type)}><i className="bi bi-plus-square-fill"></i> Nueva Tipo</button>
+        onClick={() => handleSelect()}><i className="bi bi-plus-square-fill"></i> Nueva Tipo</button>
       <table className='table table-striped-columns'>
         <THead list={headTable} />
         <tbody>

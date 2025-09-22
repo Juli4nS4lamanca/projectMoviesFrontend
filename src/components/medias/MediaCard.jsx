@@ -6,7 +6,7 @@ const MediaCard = ({ title, img, synopsis }) => {
         <div className="card-body">
           <h5 className="card-title">{title}</h5>
           <p className="card-text media-synopsis">{synopsis}</p>
-          <a href="#" className="btn btn-primary">Más información</a>
+          {/* <a href="#" className="btn btn-primary">Más información</a> */}
         </div>
       </div>
     </div>

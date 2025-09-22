@@ -70,7 +70,6 @@ const MediaForm = () => {
 
   return (
     <>
-      <h1>Añadir nueva pelicula</h1>
       <form onSubmit={addMedia} id="mediaForm">
         <InputText name={"title"} value={newMedia.title} text={"Titulo"} onChange={handleChange} type={"text"} />
         <InputTextArea name={"synopsis"} value={newMedia.synopsis} text={"Sinopsis"} onChange={handleChange} />

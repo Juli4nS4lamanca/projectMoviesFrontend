@@ -22,7 +22,7 @@ const GenresPage = () => {
       <h1>Generos</h1>
       <button type="button" className='btn btn-primary'
         data-bs-toggle='modal' data-bs-target='#formGenre'
-        onClick={() => handleSelect(utilsModels.genre)}><i className="bi bi-plus-square-fill"></i> Nueva Genero</button>
+        onClick={() => handleSelect()}><i className="bi bi-plus-square-fill"></i> Nueva Genero</button>
       <table className='table table-striped-columns'>
         <THead list={headTable} />
         <tbody>
