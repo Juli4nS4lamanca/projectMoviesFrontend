@@ -8,22 +8,22 @@ let url = process.env.NODE_ENV === "development" ? urlDev : urlBackend;
 const serviceEntity = (baseUrl) => {
 
   const getAll = async () => {
-    const response = await axios.get(`${url}${baseUrl}`);
+    const response = await axios.get(`${urlBackend}${baseUrl}`);
     return response.data;
   };
 
   const getActives = async () => {
-    const response = await axios.get(`${url}${baseUrl}/actives`)
+    const response = await axios.get(`${urlBackend}${baseUrl}/actives`)
     return response.data;
   };
 
   const create = async newEntity => {
-    const response = await axios.post(`${url}${baseUrl}`, newEntity);
+    const response = await axios.post(`${urlBackend}${baseUrl}`, newEntity);
     return response.data;
   };
 
   const update = async entity => {
-    const response = await axios.put(`${url}${baseUrl}/${entity.id}`, entity);
+    const response = await axios.put(`${urlBackend}${baseUrl}/${entity.id}`, entity);
     return response.data;
   };
 
