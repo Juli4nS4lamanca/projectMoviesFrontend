@@ -33,6 +33,13 @@ const media = {
   producerId: ''
 };
 
+const user = {
+  email: '',
+  name: '',
+  password: '',
+  rol: ''
+};
+
 export default {
-  director, media, producer, genre, type
+  director, media, producer, genre, type, user
 }

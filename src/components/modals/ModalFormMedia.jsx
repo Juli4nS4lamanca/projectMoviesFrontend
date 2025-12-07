@@ -80,7 +80,11 @@ const ModalFormMedia = ({ id, model, entity, services, onUpdate, onCreate, formC
       }
       utils.closeModal(id);
     } catch (error) {
-      showMessage('Error al guardar. Intente de nuevo', 'error');
+      const errorMessage = error.response?.data?.message || 
+        (error.response?.status === 403 ? 'No tienes permisos para realizar esta acción' : 
+         error.response?.status === 401 ? 'Sesión expirada. Por favor, inicia sesión nuevamente' :
+         'Error al guardar. Intente de nuevo');
+      showMessage(errorMessage, 'error');
       console.error(error);
       setIsLoading(false);
     } finally {

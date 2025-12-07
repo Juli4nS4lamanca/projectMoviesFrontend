@@ -5,6 +5,7 @@ import FormMedia from '@components/forms/FormMedia.jsx';
 import mediasServices from '@services/medias.js';
 import utils from '@/utils/utils.js';
 import useCrud from '@/hooks/useCrudMedia.jsx';
+import { useAuth } from '@/utils/AuthContext.jsx';
 
 const MediasPage = () => {
   const {
@@ -14,14 +15,18 @@ const MediasPage = () => {
     handleCreate,
     handleUpdate,
     handleDelete } = useCrud(mediasServices);
+  const { hasAnyRole } = useAuth();
   const headTable = ['Nombre', 'Tipo', 'Genero', 'Director', 'Casa Productora', 'Fecha Actualizacion', 'Acciones'];
+  const canModify = hasAnyRole(['docente', 'administrador']);
 
   return (
     <>
       <h1>Peliculas</h1>
-      <button type="button" className='btn btn-primary'
-        data-bs-toggle='modal' data-bs-target='#formMedia'
-        onClick={() => handleSelect()}><i className="bi bi-plus-square-fill"></i> Nueva Pelicula</button>
+      {canModify && (
+        <button type="button" className='btn btn-primary'
+          data-bs-toggle='modal' data-bs-target='#formMedia'
+          onClick={() => handleSelect()}><i className="bi bi-plus-square-fill"></i> Nueva Pelicula</button>
+      )}
       <table className='table table-striped-columns'>
         <THead list={headTable} />
         <tbody>
@@ -34,12 +39,17 @@ const MediasPage = () => {
               <td>{media.producer.name}</td>
               <td>{utils.fecha(media.dateUpdate)}</td>
               <td>
-                <button type="button" className='btn btn-primary'
-                  data-bs-toggle='modal' data-bs-target='#formMedia'
-                  onClick={() => handleSelect(media)}><i className="bi bi-pencil-square"></i></button>
-                <button type="button" className='btn btn-danger'
-                  data-bs-toggle='modal' data-bs-target='#deleteMedia'
-                  onClick={() => handleSelect(media)}><i className="bi bi-trash"></i></button>
+                {canModify && (
+                  <>
+                    <button type="button" className='btn btn-primary'
+                      data-bs-toggle='modal' data-bs-target='#formMedia'
+                      onClick={() => handleSelect(media)}><i className="bi bi-pencil-square"></i></button>
+                    <button type="button" className='btn btn-danger'
+                      data-bs-toggle='modal' data-bs-target='#deleteMedia'
+                      onClick={() => handleSelect(media)}><i className="bi bi-trash"></i></button>
+                  </>
+                )}
+                {!canModify && <span className="text-muted">Solo lectura</span>}
               </td>
             </tr>
           ))}

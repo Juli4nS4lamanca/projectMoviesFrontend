@@ -14,22 +14,28 @@ const ModalDelete = ({ id, model, entity, services, onDelete }) => {
     }
   }, [entity]);
 
-  const deleteSuccess = `${formState.name} eliminado`;
+  const getDeleteSuccessMessage = () => {
+    const name = formState.name || formState.title || formState.email || 'Elemento';
+    return `${name} eliminado`;
+  };
 
   const onClickDelete = async () => {
     try {
       setIsLoading(true);
       const deletedEntity = formState;
       await services.deleteEntity(formState);
-      showMessage(utils.capitalizerFirstLetter(deleteSuccess), 'delete');
+      showMessage(utils.capitalizerFirstLetter(getDeleteSuccessMessage()), 'delete');
       onDelete(deletedEntity);
       utils.closeModal(id);
     } catch (error) {
-      showMessage('Error al eliminar', 'error');
-      console.error(error)
+      const errorMessage = error.response?.data?.message || 
+        (error.response?.status === 403 ? 'No tienes permisos para eliminar' : 
+         error.response?.status === 401 ? 'Sesión expirada. Por favor, inicia sesión nuevamente' :
+         'Error al eliminar');
+      showMessage(errorMessage, 'error');
+      console.error(error);
       setIsLoading(false);
     } finally {
-
       setIsLoading(false);
     };
   }

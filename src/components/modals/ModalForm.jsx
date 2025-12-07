@@ -30,20 +30,30 @@ const ModalForm = ({ id, model, entity, services, onUpdate, onCreate, formCompon
 
   const onClickSave = async () => {
     try {
+      // Preparar datos para usuarios (rol debe ser array)
+      let dataToSave = { ...formState };
+      if (model === 'user' && dataToSave.rol && !Array.isArray(dataToSave.rol)) {
+        dataToSave.rol = [dataToSave.rol];
+      }
+
       if (formState.id) {
         setIsLoading(true);
-        const updatedEntity = await services.update(formState);
+        const updatedEntity = await services.update(dataToSave);
         showMessage(utils.capitalizerFirstLetter(updateSucces), 'success');
         onUpdate(updatedEntity);
       } else {
         setIsLoading(true);
-        const newEntity = await services.create(formState);
+        const newEntity = await services.create(dataToSave);
         showMessage(utils.capitalizerFirstLetter(saveSuccess), 'success');
         onCreate(newEntity);
       }
       utils.closeModal(id);
     } catch (error) {
-      showMessage('Error al guardar. Intente de nuevo', 'error');
+      const errorMessage = error.response?.data?.message || 
+        (error.response?.status === 403 ? 'No tienes permisos para realizar esta acción' : 
+         error.response?.status === 401 ? 'Sesión expirada. Por favor, inicia sesión nuevamente' :
+         'Error al guardar. Intente de nuevo');
+      showMessage(errorMessage, 'error');
       console.error(error);
       setIsLoading(false);
     } finally {
